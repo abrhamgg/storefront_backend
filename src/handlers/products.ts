@@ -59,7 +59,7 @@ const get_by_category = async(req: Request, res: Response) => {
 
 const product_routes = (app:express.Application) => {
     app.get('/products', index),
-    app.get('/products/:category', get_by_category),
+    app.get('/products/categoty/:category', get_by_category),
     app.get('/products/:id', show),
     app.post('/products', verifyAuthToken, create)
 }

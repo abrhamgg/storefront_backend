@@ -60,7 +60,8 @@
 ### 4. Endpoints
 - Product routes
     - GET ```/products``` -> returns all products.
-    - GET ``` /products/:category``` -> returns products with specific category.
+    - GET ``` /products/:id``` -> returns a product by id.
+    - GET ``` /products/category/:category``` -> returns products with specific category.
     - POST ``` /products``` -> creates a new product. Token is required
     - GET ``` /popular_products``` -> returns 5 products with maximum number of orders.
 

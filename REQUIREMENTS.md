@@ -9,7 +9,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Show  ``` GET /products/id```
 - Create [token required]  POST ``` /products```
 - [OPTIONAL] Top 5 most popular products GET ``` /popular_products``
-- [OPTIONAL] Products by category (args: product category) ``` /products/:category```
+- [OPTIONAL] Products by category (args: product category) ``` /products/category/:category```
 
 #### Users
 - Index [token required]  -> GET ``` /users ```

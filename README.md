@@ -17,6 +17,7 @@
 - jsonwebtoken -> ``` npm add jsonwebtoken```
 
 ### 2. Database Setup and Connection.
+- By default postgresql will be running in port 5432 or 5433
 - ``` CREATE DATABASE storefront_backend_dev;```
 - ```CREATE DATABASE storefront_backend_test;```
     #### 2.1 Create a hidden file which stores the enviromental variables. example env.

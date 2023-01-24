@@ -14,8 +14,44 @@ describe('Testing product model', () => {
     })
     it('should have an create method', () => {
         expect(product.create).toBeDefined();
-    })
+    }) 
 })
+
+describe('test product model methods', () => {
+
+    it('fetch all products', async () => {
+        const p: Product = {
+            name: "Legion Laptop",
+            price: 800,
+            category: "Laptop"
+        }
+        await product.create(p)
+        const products = await product.index()
+
+      expect(products.length).toBeGreaterThan(0);
+    });
+    it ('fetch product by id', async () => {
+        const p: Product = {
+            name: "Asus Laptop",
+            price: 800,
+            category: "Laptop"
+        }
+        await product.create(p)
+        const my_product = await product.show("1")
+        
+        expect(my_product).toBeInstanceOf(Object)
+    })
+    it ('fetch products by category', async () => {
+        const p: Product = {
+            name: "Lenovo Laptop",
+            price: 800,
+            category: "Laptop"
+        }
+        await product.create(p)
+        const products = await product.getProductsByCategory('Laptop')
+        expect(products?.length).toBeGreaterThanOrEqual(1)
+    })
+});
 
 describe('Testing the Product endpoints', () => {
     it ('GET /products', async () => {
@@ -42,7 +78,7 @@ describe('Testing the Product endpoints', () => {
 
         // Get jwt Token
         const token = res.body
-        
+        console.log(token)
         // Create new product using the Jwt
         const new_product = {
             "name": "temp_product",

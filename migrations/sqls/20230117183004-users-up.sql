@@ -5,3 +5,5 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(50) UNIQUE,
     password VARCHAR
 );
+
+insert into users(id, firstname, lastname, username, password) values(1, 'test', 'test', 'test', 'rt');

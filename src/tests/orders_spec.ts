@@ -1,8 +1,10 @@
-import { OrderStore } from "../models/orders";
+import { Order, OrderStore } from "../models/orders";
 import supertest from "supertest";
+import { UserStore } from "../models/users";
 import app from "../server";
 
 const order = new OrderStore()
+const store = new UserStore()
 const request = supertest(app)
 
 describe('Testing the OrderStore model', () => {
@@ -46,6 +48,7 @@ describe ('Testing orders endpoints', () => {
             password: test_user.password
         });
     })
+    
     it ('GET /orders/:user_id/current', async () => {
         const test_user = {
             id: 100,
@@ -59,6 +62,7 @@ describe ('Testing orders endpoints', () => {
         // Get jwt Token
         const token = res.body
         const res2 = await request.get('/orders/100/current').set('authorization', `Bearer ${token}`)
+        //console.log(res2.body)
         expect(res2.status).toBe(200)
         await request.delete('/users').send({
             username: test_user.username,
@@ -78,10 +82,41 @@ describe ('Testing orders endpoints', () => {
         // Get jwt Token
         const token = res.body
         const res2 = await request.get('/orders/100/completed').set('authorization', `Bearer ${token}`)
+        console.log(res2.body)
+        console.log(token)
         expect(res2.status).toBe(200)
         await request.delete('/users').send({
             username: test_user.username,
             password: test_user.password
         });
+    })
+})
+
+describe('Testing the OrderStore model methods', () => {
+
+    it ('fetch orders index method', async () => {
+        const test_user = {
+            firstname: "tom",
+            lastname: "hank",
+            username: "walter_white",
+            password: "test_user_password"
+        }
+        await store.create(test_user)
+        const o = {
+            user_id: "1",
+            status: "active"
+        }
+        console.log(await order.create(o))
+        const orders = await order.index()
+        expect(orders.length).toBeGreaterThanOrEqual(1)
+    });
+    it ('show current orders', async () => {
+        const o = {
+            user_id: '1',
+            status: "active"
+        }
+        await order.create(o)
+        const my_orders = await order.show_completed_orders(o.user_id)
+        expect(my_orders).toBeLessThanOrEqual(1)
     })
 })

@@ -5,8 +5,14 @@ import { Order, OrderStore } from '../models/orders';
 const store = new OrderStore()
 
 const index = async (_req: Request, res: Response) => {
-    const orders = await store.index();
-    res.json(orders)
+    try {
+        const orders = await store.index();
+        res.json(orders)
+    } catch (err) {
+        res.status(400)
+        res.json(err)
+    }
+    
 }
 
 
@@ -65,7 +71,7 @@ const get_completed_orders = async(_req: Request, res: Response) => {
 const order_routes = (app: express.Application) => {
     app.get('/orders', verifyAuthToken, index),
     app.post('/orders', verifyAuthToken, create),
-    app.post('/orders/:id/products', addProduct),
+    app.post('/orders/:id/products', verifyAuthToken, addProduct),
     app.get('/orders/:user_id/current', verifyAuthToken, get_current_orders),
     app.get('/orders/:user_id/completed', verifyAuthToken, get_completed_orders)
 }

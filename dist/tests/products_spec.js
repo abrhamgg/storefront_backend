@@ -19,6 +19,38 @@ describe('Testing product model', () => {
         expect(product.create).toBeDefined();
     });
 });
+describe('test product model methods', () => {
+    it('fetch all products', async () => {
+        const p = {
+            name: "Legion Laptop",
+            price: 800,
+            category: "Laptop"
+        };
+        await product.create(p);
+        const products = await product.index();
+        expect(products.length).toBeGreaterThan(0);
+    });
+    it('fetch product by id', async () => {
+        const p = {
+            name: "Asus Laptop",
+            price: 800,
+            category: "Laptop"
+        };
+        await product.create(p);
+        const my_product = await product.show("1");
+        expect(my_product).toBeInstanceOf(Object);
+    });
+    it('fetch products by category', async () => {
+        const p = {
+            name: "Lenovo Laptop",
+            price: 800,
+            category: "Laptop"
+        };
+        await product.create(p);
+        const products = await product.getProductsByCategory('Laptop');
+        expect(products?.length).toBeGreaterThanOrEqual(1);
+    });
+});
 describe('Testing the Product endpoints', () => {
     it('GET /products', async () => {
         const response = await request.get('/products');
@@ -43,6 +75,7 @@ describe('Testing the Product endpoints', () => {
         const res = await request.post('/users').send(test_user);
         // Get jwt Token
         const token = res.body;
+        console.log(token);
         // Create new product using the Jwt
         const new_product = {
             "name": "temp_product",

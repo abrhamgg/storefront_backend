@@ -22,6 +22,32 @@ describe('Testing the UserStore model', () => {
         expect(store.authenticate).toBeDefined();
     });
 });
+describe('Testing the UserStore methods', () => {
+    it('fetch all users', async () => {
+        const test_user = {
+            firstname: "tom",
+            lastname: "hank",
+            username: "walter",
+            password: "test_user_password"
+        };
+        await store.create(test_user);
+        const users = await store.index();
+        expect(users.length).toBeGreaterThanOrEqual(1);
+        const res = await store.delete(test_user.username, test_user.password);
+    });
+    it('fetch user by id', async () => {
+        const test_user = {
+            firstname: "tom",
+            lastname: "hank",
+            username: "walter",
+            password: "test_user_password"
+        };
+        await store.create(test_user);
+        const my_user = await store.show("1");
+        expect(my_user).toBeTruthy;
+        await store.delete(test_user.username, test_user.password);
+    });
+});
 describe('Test User endpoints', () => {
     it('POST /user -> creates new user', async () => {
         const test_user = {
@@ -46,6 +72,7 @@ describe('Test User endpoints', () => {
             password: "crucio"
         };
         const res = await request.post('/users').send(test_user);
+        expect(res.status).toBe(200);
         const req2 = await request.get('/login').send({
             username: test_user.username,
             password: test_user.password

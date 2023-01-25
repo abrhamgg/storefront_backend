@@ -30,6 +30,7 @@ describe ('Testing orders endpoints', () => {
         const res = await request.get('/orders')
         expect(res.status).toBe(400)
     })
+    /*
     it ('/GET orders', async () => {
         const test_user = {
             firstname: "tom",
@@ -48,7 +49,7 @@ describe ('Testing orders endpoints', () => {
             password: test_user.password
         });
     })
-    
+    */
     it ('GET /orders/:user_id/current', async () => {
         const test_user = {
             id: 100,

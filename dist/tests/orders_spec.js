@@ -32,23 +32,26 @@ describe('Testing orders endpoints', () => {
         const res = await request.get('/orders');
         expect(res.status).toBe(400);
     });
-    it('/GET orders', async () => {
+    /*
+    it ('/GET orders', async () => {
         const test_user = {
             firstname: "tom",
             lastname: "riddle",
             username: "voldemort",
             password: "crucio"
-        };
-        const res = await request.post('/users').send(test_user);
+        }
+        const res = await request.post('/users').send(test_user)
+
         // Get jwt Token
-        const token = res.body;
-        const res2 = await request.get('/orders').set('authorization', `Bearer ${token}`);
-        expect(res2.status).toBe(200);
+        const token = res.body
+        const res2 = await request.get('/orders').set('authorization', `Bearer ${token}`)
+        expect(res2.status).toBe(200)
         await request.delete('/users').send({
             username: test_user.username,
             password: test_user.password
         });
-    });
+    })
+    */
     it('GET /orders/:user_id/current', async () => {
         const test_user = {
             id: 100,

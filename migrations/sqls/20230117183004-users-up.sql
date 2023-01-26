@@ -6,4 +6,4 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR
 );
 
-insert into users(id, firstname, lastname, username, password) values(1, 'test', 'test', 'test', 'rt');
+insert into users(id, firstname, lastname, username, password) values(777, 'root', 'tester', 'rootuser', 'root');

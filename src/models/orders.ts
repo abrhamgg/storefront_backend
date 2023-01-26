@@ -30,6 +30,19 @@ export class OrderStore {
             throw new Error(`Cannot create orders. Error: ${err}`)
         }
     }
+
+    async delete (o: string): Promise<number> {
+        try {
+            const sql = 'DELETE FROM orders WHERE id = ($1)';
+            const conn = await client.connect()
+            const result = await conn.query(sql, [o])
+            conn.release
+            console.log("deletion success")
+            return 0
+        } catch {
+            return -1
+        }
+    }
     async show_current_orders(user_id: string): Promise<Order[]> {
         try {
             const sql = "SELECT * FROM orders WHERE user_id=($1) AND status='active'"

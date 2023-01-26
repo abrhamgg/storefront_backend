@@ -30,6 +30,17 @@ const create = async(req: Request, res: Response) => {
     }
 }
 
+const delete_order = async(req: Request, res: Response) => {
+    try {
+        const order_id = req.params.id
+        const status = await store.delete(order_id)
+        res.status(200)
+        res.json({message: "order has been removed"})
+    } catch {
+        res.json({message: "Error"})
+    }
+}
+
 const addProduct = async(_req: Request, res: Response) => {
     const order_id: string = _req.params.id
     const product_id: string = _req.body.product_id
@@ -73,7 +84,8 @@ const order_routes = (app: express.Application) => {
     app.post('/orders', verifyAuthToken, create),
     app.post('/orders/:id/products', verifyAuthToken, addProduct),
     app.get('/orders/:user_id/current', verifyAuthToken, get_current_orders),
-    app.get('/orders/:user_id/completed', verifyAuthToken, get_completed_orders)
+    app.get('/orders/:user_id/completed', verifyAuthToken, get_completed_orders),
+    app.delete('/orders/:id', verifyAuthToken, delete_order)
 }
 
 
